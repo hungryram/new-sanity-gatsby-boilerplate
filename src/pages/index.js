@@ -1,9 +1,12 @@
 import * as React from "react"
+import Layout from "../components/global/Layout"
 
 export default function Index() {
   return (
     <>
-      <h1 className="text-2xl">Tets</h1>
+    <Layout>
+
+    </Layout>
     </>
   )
 }
