@@ -1,13 +1,14 @@
 import * as React from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { HiOutlineMenuAlt4 } from "@react-icons/all-files/hi/HiOutlineMenuAlt4"
 import { IconContext } from "@react-icons/all-files";
 import { GrClose } from "@react-icons/all-files/gr/GrClose"
 import { BiCaretDown } from "@react-icons/all-files/bi/BiCaretDown"
 
 export default function Navbar() {
-  const [active, setActive] = useState(true);
+
+  const [active, setActive] = useState(null);
 
   return (
     <StaticQuery
@@ -113,27 +114,27 @@ export default function Navbar() {
               </Link>
             </div>
             <ul className="flex-2 items-center text-right">
-              {data.sanityAppearances.header?.mainNav.items.map((links, i) => {
-                if (links.submenuChild?.[0]) {
+              {data.sanityAppearances.header?.mainNav.items.map((link, i) => {
+                if (link.submenuChild.length > 0) {
                   return (
                     <>
-                      <li className="inline-block mx-2" onClick={() => setActive(!active)}>
+                      <li className="relative inline-block mx-2" onClick={active === link ? () => setActive(null) : () => setActive(link)}>
                         <Link
-                          aria-label={links.internalLink?.name ?? links.internalLink?.title ?? links.text}
-                          target={links?.externalUrl && "_blank"}
+                          aria-label={link.internalLink?.name ?? link.internalLink?.title ?? link.text}
+                          target={link?.externalUrl && "_blank"}
                           key={i}
-                          className="cursor-pointer"
-                          
+                          className="cursor-pointer flex flex-row items-center"               
                         >
-                          {links.internalLink?.name ?? links.internalLink?.title ?? links.text} &#9660;
+                          {link.internalLink?.name ?? link.internalLink?.title ?? link.text} <BiCaretDown className={`ml-1 text-lg ${active === link ? "rotate-180" : "rotate-0"}`} />
                         </Link>
 
-                          <ul className={active ? "hidden" : "visible"}>
-                            {links.submenuChild.map((sub) => {
+                          <ul className={`absolute -bottom-2 left-0 translate-y-full bg-white p-2 border text-left w-fit ${active === link ? "visible" : "hidden"}`}>
+                            {link.submenuChild.map((sub) => {
                               return (
                                 <>
-                                  <li>
+                                  <li className="whitespace-nowrap">
                                     <Link
+                                    onClick={() => setActive(null)}
                                       to={(sub.internalLink?._type === "post" && `/blog/${sub.internalLink.slug.current}`) || (sub.internalLink?._type === "legal" && `/legal/${sub.internalLink.slug.current}`) || (sub.internalLink?._type === "author" && `/authors/${sub.internalLink.slug.current}`) || (sub.externalUrl && `${sub.externalUrl}`)}
                                       aria-label={sub.internalLink?.name ?? sub.internalLink?.title ?? sub.text}
                                       target={sub?.externalUrl && "_blank"}
@@ -152,11 +153,11 @@ export default function Navbar() {
                     <>
                       <Link
                         className="mx-2 inline-block"
-                        to={(links.internalLink?._type === "post" && `/blog/${links.internalLink.slug.current}`) || (links.internalLink?._type === "legal" && `/legal/${links.internalLink.slug.current}`) || (links.internalLink?._type === "author" && `/authors/${links.internalLink.slug.current}`) || (links.externalUrl && `${links.externalUrl}`)}
-                        aria-label={links.internalLink?.name ?? links.internalLink?.title ?? links.text}
-                        target={links?.externalUrl && "_blank"}
+                        to={(link.internalLink?._type === "post" && `/blog/${link.internalLink.slug.current}`) || (link.internalLink?._type === "legal" && `/legal/${link.internalLink.slug.current}`) || (link.internalLink?._type === "author" && `/authors/${link.internalLink.slug.current}`) || (link.externalUrl && `${link.externalUrl}`)}
+                        aria-label={link.internalLink?.name ?? link.internalLink?.title ?? link.text}
+                        target={link?.externalUrl && "_blank"}
                       >
-                        {links.internalLink?.name ?? links.internalLink?.title ?? links.text}
+                        {link.internalLink?.name ?? link.internalLink?.title ?? link.text}
 
                       </Link>
                     </>
