@@ -10,60 +10,61 @@ export default function Navbar() {
   return (
     <StaticQuery
       query={graphql`
-            {
-                sanityAppearances {
-                  header {
-                    mainNav {
-                      items {
-                        internalLink {
-                          ... on SanityPost {
-                            id
-                            slug {
-                              current
-                            }
-                            title
-                            _type
-                          }
-                          ... on SanityLegal {
-                            id
-                            slug {
-                              current
-                            }
-                            title
-                            _type
-                          }
-                          ... on SanityAuthor {
-                            id
-                            name
-                            slug {
-                              current
-                            }
-                            _type
-                          }
-                        }
-                        externalUrl
-                      }
+      {
+        sanityAppearances {
+          header {
+            mainNav {
+              items {
+                internalLink {
+                  ... on SanityPost {
+                    id
+                    slug {
+                      current
                     }
+                    title
+                    _type
                   }
-                  branding {
-                    logo {
-                      asset {
-                        url
-                      }
+                  ... on SanityLegal {
+                    id
+                    slug {
+                      current
                     }
-                    favicon {
-                      asset {
-                        url
-                      }
+                    title
+                    _type
+                  }
+                  ... on SanityAuthor {
+                    id
+                    name
+                    slug {
+                      current
                     }
-                    logoWidth
+                    _type
                   }
                 }
-                sanityProfileSettings {
-                  company_name
-                }
+                externalUrl
+                text
               }
-              
+            }
+          }
+          branding {
+            logo {
+              asset {
+                url
+              }
+            }
+            favicon {
+              asset {
+                url
+              }
+            }
+            logoWidth
+          }
+        }
+        sanityProfileSettings {
+          company_name
+        }
+      }
+      
             `
       }
       render={data => (
@@ -84,9 +85,11 @@ export default function Navbar() {
                   <>
                     <Link
                       className="mx-2"
-                      to={(links.internalLink?._type === "post" && `/blog/${links.internalLink.slug.current}`) || (links.internalLink?._type === "legal" && `/legal/${links.internalLink.slug.current}`) || (links.internalLink?._type === "author" && `/authors/${links.internalLink.slug.current}`)}
+                      to={(links.internalLink?._type === "post" && `/blog/${links.internalLink.slug.current}`) || (links.internalLink?._type === "legal" && `/legal/${links.internalLink.slug.current}`) || (links.internalLink?._type === "author" && `/authors/${links.internalLink.slug.current}`) || (links.externalUrl && `${links.externalUrl}`)}
+                      aria-label={links.internalLink?.name ?? links.internalLink?.title ?? links.text}
+                      target={links?.externalUrl && "_blank" }
                     >
-                      {links.internalLink?.name ?? links.internalLink?.title}
+                      {links.internalLink?.name ?? links.internalLink?.title ?? links.text}
                     </Link>
                   </>
                 )
