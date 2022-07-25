@@ -6,10 +6,10 @@ module.exports = {
   plugins: [{
     resolve: 'gatsby-source-sanity',
     options: {
-      "projectId": "",
-      "dataset": ""
+      "projectId": "yass02fz",
+      "dataset": "production"
     }
-  }, "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
+  }, "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", "gatsby-plugin-postcss", {
     resolve: 'gatsby-plugin-manifest',
     options: {
       "icon": "src/images/icon.png"
