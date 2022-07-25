@@ -14,6 +14,7 @@ import profile from "./documents/profile"
 import appearanceSettings from "./documents/appearance"
 import legal from "./documents/legal"
 import menu from "./documents/navigation"
+import pages from "./documents/pages"
 
 import social from "./blocks/social"
 import contact from "./blocks/contact"
@@ -40,6 +41,7 @@ export default createSchema({
     // in the studio.
     profile,
     appearanceSettings,
+    pages,
     post,
     author,
     category,

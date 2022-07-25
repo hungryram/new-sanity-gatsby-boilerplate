@@ -31,6 +31,21 @@ export default {
             type: 'string',
         },
         {
+            title: 'Linkedin',
+            name: 'linkedin',
+            type: 'string',
+        },
+        {
+            title: 'Yelp',
+            name: 'yelp',
+            type: 'string',
+        },
+        {
+            title: 'Pinterest',
+            name: 'pinterest',
+            type: 'string',
+        },
+        {
             title: 'Tiktok',
             name: 'tiktok',
             type: 'string',
