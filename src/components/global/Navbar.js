@@ -84,7 +84,7 @@ export default function Navbar() {
                   <>
                     <Link
                       className="mx-2"
-                      to={(links.internalLink._type === "post" && `/blog/${links.internalLink.slug.current}`) || (links.internalLink._type === "legal" && `/legal/${links.internalLink.slug.current}`) || (links.internalLink._type === "author" && `/authors/${links.internalLink.slug.current}`)}
+                      to={(links.internalLink?._type === "post" && `/blog/${links.internalLink.slug.current}`) || (links.internalLink?._type === "legal" && `/legal/${links.internalLink.slug.current}`) || (links.internalLink?._type === "author" && `/authors/${links.internalLink.slug.current}`)}
                     >
                       {links.internalLink?.name ?? links.internalLink?.title}
                     </Link>
